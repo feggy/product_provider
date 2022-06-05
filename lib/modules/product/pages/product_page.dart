@@ -16,6 +16,7 @@ class _ProductPageState extends State<ProductPage> {
   @override
   void initState() {
     super.initState();
+    // kita panggil dulu fungsi ini untuk mendapatkan nilai dari getProducts
     Provider.of<ProductProvider>(context, listen: false).init();
   }
 
@@ -25,12 +26,17 @@ class _ProductPageState extends State<ProductPage> {
       appBar: AppBar(title: const Text('Product')),
       backgroundColor: Colors.grey[100],
       body: SafeArea(
+        // Consumer ini untuk agak kita mendapatkan state yang sedang berjalan itu apa
         child: Consumer<ProductProvider>(builder: (context, state, widget) {
+          // jika statenya loading
           if (state.isLoading) {
+            // kita jalankan loading
             return const Center(
               child: CircularProgressIndicator.adaptive(),
             );
           }
+
+          // kalau state loading selesai di jalankan widget ini
           return const ListProductWidget();
         }),
       ),

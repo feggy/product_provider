@@ -24,15 +24,23 @@ class ListProductWidget extends StatelessWidget {
         crossAxisSpacing: 10,
         childAspectRatio: 1.1,
       ),
+      // biar kita bisa load more, kita cek dulu dari total data yang di dapat itu panjang data dari products (products.length) itu sama gak sama total data
       itemCount: products.length == productProvider.totalData
+          // kalau sama berarti kita gak perlu load more lagi
           ? products.length
+          // kalau gak sama kita tambahkan 1 biar nanti ada widget tambahan sebagai loading item di list
           : products.length + 1,
       itemBuilder: (context, index) {
+        // kita cek dulu indexnya sekarang ini lebih besar gak dari panjang data products (products.length)?
         if (index >= products.length) {
-          productProvider.loadMoreProducts();
-          return const CircularProgressIndicator.adaptive();
+          // kalau iya berarti kita jalankan perintah load more untuk mendapatkan lebih banyak data
+          productProvider
+              .loadMoreProducts(); // ini fungsi udah di buat di provider
+          return const CircularProgressIndicator
+              .adaptive(); // ini yang kita lebihin 1 tadi
         }
-        return ItemProductWidget(product: products[index]);
+        return ItemProductWidget(
+            product: products[index]); // ini widget yang ditampilkan
       },
     );
   }
